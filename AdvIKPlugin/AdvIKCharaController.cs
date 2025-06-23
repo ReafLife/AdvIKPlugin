@@ -739,7 +739,7 @@ namespace AdvIKPlugin
         }
 
 
-        private GameObject FindAnimator()
+        public GameObject FindAnimator()
         {
             return ChaControl.objAnim;
         }

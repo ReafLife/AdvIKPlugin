@@ -38,10 +38,41 @@ namespace AdvIKPlugin
                     skip = false;
                     return;
                 }
+
+                skip = true;
+
                 RotateShoulder(FullBodyBipedChain.LeftArm, weight, offset);
                 RotateShoulder(FullBodyBipedChain.RightArm, weightR, offsetR);
-                skip = true;
+
+                var animator = advIKCharaController.FindAnimator();
+                Quaternion footLBackup = Quaternion.identity;
+                Quaternion footRBackup = Quaternion.identity;
+                Transform footL = null;
+                Transform footR = null;
+
+                if (animator)
+                {
+                    footL = advIKCharaController.FindDescendant(animator.transform, "cf_J_Foot02_L");
+                    footR = advIKCharaController.FindDescendant(animator.transform, "cf_J_Foot02_R");
+
+                    footLBackup = footL ? footL.localRotation : Quaternion.identity;
+                    footRBackup = footR ? footR.localRotation : Quaternion.identity;
+                }
+
                 ik.solver.Update();
+
+                if (animator)
+                {
+                    if (footL)
+                    {
+                        footL.localRotation = footLBackup;
+                    }
+
+                    if (footR)
+                    {
+                        footR.localRotation = footRBackup;
+                    }
+                }
             }
         }
 
