@@ -44,6 +44,7 @@ namespace AdvIKPlugin
                 RotateShoulder(FullBodyBipedChain.LeftArm, weight, offset);
                 RotateShoulder(FullBodyBipedChain.RightArm, weightR, offsetR);
 
+#if HS2
                 var animator = advIKCharaController.FindAnimator();
                 Quaternion footLBackup = Quaternion.identity;
                 Quaternion footRBackup = Quaternion.identity;
@@ -58,9 +59,11 @@ namespace AdvIKPlugin
                     footLBackup = footL ? footL.localRotation : Quaternion.identity;
                     footRBackup = footR ? footR.localRotation : Quaternion.identity;
                 }
+#endif
 
                 ik.solver.Update();
 
+#if HS2
                 if (animator)
                 {
                     if (footL)
@@ -73,6 +76,7 @@ namespace AdvIKPlugin
                         footR.localRotation = footRBackup;
                     }
                 }
+#endif
             }
         }
 
